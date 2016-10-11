@@ -17,6 +17,7 @@ def stringUniqueChars2(s):
 	return True
 	
 #----------------------------------------------------------------------
+
 #1.2
 def isPermutation(s1, s2):
 	s1 = ''.join(sorted(s1))
@@ -24,6 +25,7 @@ def isPermutation(s1, s2):
 	return s1 == s2
 	
 #----------------------------------------------------------------------
+
 #1.3
 def URLify(s):
 	toReturn = ""
@@ -36,6 +38,7 @@ def URLify(s):
 	return toReturn
 
 #----------------------------------------------------------------------
+
 #1.4
 def palindromePermutation(s):
 	s = s.lower().strip().replace(" ", "")
@@ -56,6 +59,7 @@ def palindromePermutation(s):
 	return True
 
 #----------------------------------------------------------------------
+
 #1.5
 def oneAway(s1, s2):
 	if len(s1) == len(s2):
@@ -97,6 +101,7 @@ def checkInsertion(s1, s2):
 	return True
 
 #----------------------------------------------------------------------
+
 #1.6
 def stringCompression(s):
 	curCount = 1
@@ -115,3 +120,43 @@ def stringCompression(s):
 	return s
 
 #----------------------------------------------------------------------
+
+#1.7
+def rotateMatrix(matrix, n):
+	for i in range(n / 2):
+		first = i
+		last = n - 1 - i
+		for i in range(first, last):
+			offset = i - first
+			top = matrix[first][i]
+			matrix[first][i] = matrix[last-offset][first]
+			matrix[last-offset][first] = matrix[last][last-offset]
+			matrix[last][last-offset] = matrix[i][last]
+			matrix[i][last] = top
+	return matrix
+
+#----------------------------------------------------------------------
+
+#1.8
+def zeroMatrix(matrix):
+	rowsToZero = []
+	colsToZero = []
+	for r in range(len(matrix)):
+		for c in range(len(matrix[0])):
+			if matrix[r][c] == 0:
+				rowsToZero.append(r)
+				colsToZero.append(c)
+	for row in rowsToZero:
+		for c in range(len(matrix[0])):
+			matrix[row][c] = 0
+	for col in colsToZero:
+		for r in range(len(matrix)):
+			matrix[r][col] = 0
+	return matrix
+	
+#----------------------------------------------------------------------
+
+#1.9
+def stringRotation(s1, s2):
+	s2double = s2 + s2
+	return isSubstring(s2, s1)
