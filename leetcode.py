@@ -4,32 +4,31 @@
 # along its path.
 # Note: You can only move either down or right at any point in time.
 class Solution(object):
-    def minPathSum(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
-        
-        if len(grid) == 0 or len(grid[0]) == 0:
-            return 0
-            
-        dynArr = [[0] * len(grid[0]) for x in range(len(grid))]
-        
-        dynArr[0][0] = grid[0][0]
-        
-        for r in range(1, len(grid)):
-            dynArr[r][0] = dynArr[r-1][0] + grid[r][0]
+	def minPathSum(self, grid):
+		"""
+		:type grid: List[List[int]]
+		:rtype: int
+		"""
+		
+		if len(grid) == 0 or len(grid[0]) == 0:
+			return 0
+			
+		dynArr = [[0] * len(grid[0]) for x in range(len(grid))]
+		dynArr[0][0] = grid[0][0]
+		
+		for r in range(1, len(grid)):
+			dynArr[r][0] = dynArr[r-1][0] + grid[r][0]
+			
+		for c in range(1, len(grid[0])):
+			dynArr[0][c] = dynArr[0][c-1] + grid[0][c]
+		
+		for r in range(1, len(grid)):
+			for c in range(1, len(grid[0])):
+				fromTop = dynArr[r-1][c]
+				fromLeft = dynArr[r][c-1]
+				dynArr[r][c] = min(fromTop, fromLeft) + grid[r][c]
 
-        for c in range(1, len(grid[0])):
-            dynArr[0][c] = dynArr[0][c-1] + grid[0][c]
-        
-        for r in range(1, len(grid)):
-            for c in range(1, len(grid[0])):
-                fromTop = dynArr[r-1][c]
-                fromLeft = dynArr[r][c-1]
-                dynArr[r][c] = min(fromTop, fromLeft) + grid[r][c]
-                
-        return dynArr[len(grid)-1][len(grid[0])-1]
+		return dynArr[len(grid)-1][len(grid[0])-1]
 
 
 # 104. Maximum Depth of Binary Tree
@@ -44,20 +43,43 @@ class Solution(object):
 #         self.left = None
 #         self.right = None
 class Solution(object):
-    def maxDepth(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        if root == None:
-            return 0
-        if (root.left == None) and (root.right == None):
-            return 1
-        if (root.left == None):
-            return self.maxDepth(root.right) + 1
-        if (root.right == None):
-            return self.maxDepth(root.left) + 1
-        else:
-            leftDepth = self.maxDepth(root.left)
-            rightDepth = self.maxDepth(root.right)
-            return max(leftDepth, rightDepth) + 1
+	def maxDepth(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: int
+		"""
+		if root == None:
+			return 0
+		if (root.left == None) and (root.right == None):
+			return 1
+		if (root.left == None):
+			return self.maxDepth(root.right) + 1
+		if (root.right == None):
+			return self.maxDepth(root.left) + 1
+		else:
+			leftDepth = self.maxDepth(root.left)
+			rightDepth = self.maxDepth(root.right)
+			return max(leftDepth, rightDepth) + 1
+
+# 66. Plus One
+# Given a non-negative number represented as an array of digits, plus one to
+# the number. The digits are stored such that the most significant digit is at
+# the head of the list.
+class Solution(object):
+	def plusOne(self, digits):
+		"""
+		:type digits: List[int]
+		:rtype: List[int]
+		"""
+		lastIndex = len(digits) - 1
+		digits[lastIndex] = digits[lastIndex] + 1
+		while (lastIndex > 0 and digits[lastIndex] / 10 != 0):
+			digits[lastIndex] = digits[lastIndex] % 10
+			digits[lastIndex - 1] += 1
+			lastIndex -= 1
+
+		if digits[0] / 10 != 0:
+			digits[0] = digits[0] % 10
+			digits.insert(0, 1)
+
+		return digits
