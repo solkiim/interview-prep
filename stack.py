@@ -19,3 +19,21 @@ def bracketCheck(str):
 	
 # time complexity: O(n)
 # space complexity: O(n)
+
+
+# breadth first traversal
+def bft(root):
+	q = queue()
+	q.enqueue(root)
+	while not q.isEmpty():
+		node = q.dequeue()
+		visit(node)
+		q.enqueue("node's children")
+
+# depth first traversal
+def dft(root):
+	visit(root)
+	if root.left != None:
+		dft(root.left)
+	if root.right != None:
+		dft(root.right)
